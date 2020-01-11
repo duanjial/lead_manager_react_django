@@ -12,7 +12,9 @@ export const getLeads = () => dispatch => {
         payload: res.data
       });
     })
-    .catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
 };
 
 // Delete Lead
@@ -40,5 +42,7 @@ export const addLead = lead => dispatch => {
         payload: res.data
       });
     })
-    .catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
 };

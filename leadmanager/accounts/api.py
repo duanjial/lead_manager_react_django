@@ -14,9 +14,10 @@ class RegisterAPI(generics.GenericAPIView):
         user = serializer.save()
         _, token = AuthToken.objects.create(user)
         return Response({
-            "user": UserSerializer(user,
-                                   context=self.get_serializer_context()).data,
-            "token": token
+            "user":
+            UserSerializer(user, context=self.get_serializer_context()).data,
+            "token":
+            token
         })
 
 
@@ -30,9 +31,10 @@ class LoginAPI(generics.GenericAPIView):
         user = serializer.validated_data
         _, token = AuthToken.objects.create(user)
         return Response({
-            "user": UserSerializer(user,
-                                   context=self.get_serializer_context()).data,
-            "token": token
+            "user":
+            UserSerializer(user, context=self.get_serializer_context()).data,
+            "token":
+            token
         })
 
 
