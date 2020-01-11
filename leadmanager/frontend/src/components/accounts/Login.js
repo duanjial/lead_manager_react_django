@@ -1,13 +1,20 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { loadUser, loginUser } from "../../actions/auth";
 import { connect } from "react-redux";
 import { createMessage, returnErrors } from "../../actions/messages";
+import PropTypes from "prop-types";
 
 export class Login extends Component {
   state = {
     username: "",
     password: ""
+  };
+
+  static propTypes = {
+    isAuthenticated: PropTypes.bool,
+    createMessage: PropTypes.func.isRequired,
+    loginUser: PropTypes.func.isRequired
   };
 
   onSubmit = e => {
@@ -27,6 +34,9 @@ export class Login extends Component {
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   render() {
+    if (this.props.isAuthenticated) {
+      return <Redirect to="/" />;
+    }
     const { username, password } = this.state;
     return (
       <div className="col-md-6 m-auto">
@@ -68,7 +78,13 @@ export class Login extends Component {
   }
 }
 
-export default connect(
-  null,
-  { loadUser, loginUser, createMessage, returnErrors }
-)(Login);
+const mapStateToProps = state => ({
+  isAuthenticated: state.authReducer.isAuthenticated
+});
+
+export default connect(mapStateToProps, {
+  loadUser,
+  loginUser,
+  createMessage,
+  returnErrors
+})(Login);
