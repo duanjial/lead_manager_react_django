@@ -60,7 +60,7 @@ export class Register extends Component {
                 className="form-control"
                 name="password2"
                 onChange={this.onChange}
-                value={password}
+                value={password2}
               />
             </div>
             <div className="form-group">

@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { loadUser, loginUser } from "../../actions/auth";
+import { connect } from "react-redux";
+import { createMessage, returnErrors } from "../../actions/messages";
 
 export class Login extends Component {
   state = {
@@ -9,13 +12,22 @@ export class Login extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    console.log("submit");
+    const { username, password } = this.state;
+    // console.log(username, password);
+    if (!username || !password) {
+      this.props.createMessage({
+        msg: "Please provide Username or Password to login"
+      });
+    } else {
+      const user = { username: username, password: password };
+      this.props.loginUser(user);
+    }
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   render() {
-    const { username, email, password, password2 } = this.state;
+    const { username, password } = this.state;
     return (
       <div className="col-md-6 m-auto">
         <div className="card card-body mt-5">
@@ -56,4 +68,7 @@ export class Login extends Component {
   }
 }
 
-export default Login;
+export default connect(
+  null,
+  { loadUser, loginUser, createMessage, returnErrors }
+)(Login);

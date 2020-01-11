@@ -31,3 +31,22 @@ export const loadUser = () => (dispatch, getState) => {
       dispatch({ type: AUTH_ERROR });
     });
 };
+
+// Login user
+export const loginUser = user => (dispatch, getState) => {
+  // Headers
+  const config = {
+    headers: {
+      "Content-type": "application/json"
+    }
+  };
+  axios
+    .post("/api/auth/login", JSON.stringify(user), config)
+    .then(res => {
+      localStorage.setItem("token", res.data.token);
+      loadUser();
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
